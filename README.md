@@ -4,12 +4,36 @@ This module is responsible for fetching sentences containing the target user-inp
 
 ## Functional Design:
 External Package: MetaPy, NLTK
-- driver function loading json file into a dictionary
-![Image of load_json](https://github.com/Forward-UIUC-2021F/example-sentence-extraction/blob/main/load_json.png)
+- driver function loading json file into a dictionary where the keys are titles of articles and values are abstracts of the articles.
+```
+with open(arxiv,'r') as in_json_file:
+    json_obj_list = json.load(in_json_file)
+    for json_obj in json_obj_list:
+        titleAbstractDict[json_obj["title"]] = json_obj["abstract"]
+```
+- driver function loading keywords csv file into a list- keywordList
+```
+with open('Keywords-Springer-83K.csv', 'r',encoding='utf-8') as inp:
+    reader = csv.reader(inp)
+    keywordList = []
+    for rows in reader:
+        keywordList.append(rows[0])
+```
 
 - getSentences takes the target keyword and a text segment(string type) and returns a list of sentences containing the keyword. 
-![Image of getsentence](https://github.com/Forward-UIUC-2021F/example-sentence-extraction/blob/main/getsentence.png)
-Note: Code above could be simplified using split()
+```
+def getSentences(keyword, text):
+    return keywordSentences
+```
+- generate_wordcloud takes a collection of stopwords and a list of keywords, outputs the wordcloud of the keywords
+```
+def generate_wordcloud(StopWords,wordcloudlist):
+    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+    plt.show()
+```
 - MetaPy filters used to evaluate the sample sentences.
 
 ## Algorithmic Design:
