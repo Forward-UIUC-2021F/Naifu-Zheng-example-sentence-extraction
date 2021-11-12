@@ -57,25 +57,30 @@ if __name__ == "__main__":
                     candidateSentences.append(sentence)
             if len(candidateSentences)>20:
                 break
-        print(candidateSentences)
-
+        #print(candidateSentences)
+    #print(len(candidateSentences))
     kw_trie = construct_trie(keywordList)
     reg = construct_re(kw_trie)
     idealSentences = []
     all_matched_kw = []
     for sentence in candidateSentences:
+        sentenceLength = len(sentence)
         matches = get_matches(sentence, reg)
-        if len(matches)>=3:
-            idealSentences.append(sentence)
-            for keyword in matches:
-                if keyword == trialKey[0]:
-                    continue
-                else:
-                    all_matched_kw.append(keyword)
+        for keyword in matches:
+            if keyword == trialKey[0]:
+                continue
+            else:
+                all_matched_kw.append(keyword)
+        if sentenceLength >300 or sentenceLength<50:
+            continue
+        idealSentences.append((len(matches)*100.0/sentenceLength,len(matches),sentence))
+        
         #print(matches)
+    idealSentences.sort(key = lambda y : y[0])
     print(idealSentences)
+    print(len(idealSentences))
     print(all_matched_kw)
-    generate_wordcloud(SWords,all_matched_kw)
+    #generate_wordcloud(SWords,all_matched_kw)
 
 
 
