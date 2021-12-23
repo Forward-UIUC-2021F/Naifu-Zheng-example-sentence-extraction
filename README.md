@@ -2,6 +2,10 @@
 Module: Finding example sentences for keywords
 This module is responsible for fetching sentences containing the target user-inputed keyword, and by comparison with one another, select sentences which demonstrate the appropriate usage of the keyword. 
 
+## Demo video
+[![Watch the video](https://img.youtube.com/vi/GjHNIrJioOk/maxresdefault.jpg)](https://www.youtube.com/watch?v=GjHNIrJioOk)
+
+
 ## Setup and Dependencies
 - run the commands below to install packages
 ```
