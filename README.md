@@ -14,7 +14,7 @@ pip3 install wordcloud
 ```
 - All the sample sentences are from the pruned Arxiv dataset(original dataset is in the reference at the bottom of the page). The filtered Arxiv dataset contains only papers about computer science topics, work is done by Forward Data Lab. Need to download the filtered Arxiv dataset first.
 
-- Need to download the csv file of the computer science keywords
+- Need to download the csv file of the computer science keywords. Can be downloaded [here](https://drive.google.com/drive/folders/1wD9t3BQbLktgOqzU0z8Xmnds1At6bZn5)
 ```
 naifu-zheng-example-sentence-extraction/
     - keywords.py
