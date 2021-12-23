@@ -15,6 +15,18 @@ pip3 install wordcloud
 - All the sample sentences are from the pruned Arxiv dataset(original dataset is in the reference at the bottom of the page). The filtered Arxiv dataset contains only papers about computer science topics, work is done by Forward Data Lab. Need to download the filtered Arxiv dataset first.
 
 - Need to download the csv file of the computer science keywords
+```
+naifu-zheng-example-sentence-extraction/
+    - keywords.py
+    - main.py
+    - __init__.py
+    - trie/
+        -- __init__.py
+        -- Trie.py
+        -- utils.py
+    - filtered_arxiv.json
+    - Keywords-Springer-83K.csv
+```
 
 ## Functional Design:
 External Package: MetaPy, NLTK
@@ -57,6 +69,11 @@ Then by applying the metaPy package, we got the term frequencies of the sentence
 
 - Determination of the quality of a sentence: number of other CS keywords appeared in the sentence/length of the sentence
 ![Image of flowchart](https://github.com/Forward-UIUC-2021F/example-sentence-extraction/blob/main/flowchart.png)
+
+## Potential Improvement
+- Some edge cases of splitting sentences are unconsidered. Probably can be improved using NLTK tokenizer.
+- There are a few sentences in test runs such that they are a list of keywords, which should be removed.
+- Wordcloud stemmization and lemmatization
 
 ## Reference:
 Dataset: https://www.kaggle.com/Cornell-University/arxiv
