@@ -1,6 +1,16 @@
 # example-sentence-extraction
 Module: Finding example sentences for keywords
-This module is responsible for fetching sentences containing the target user-inputed keyword, and by comparison with one another, select no more than 5 sentences which demonstrate the appropriate usage of the keyword.
+This module is responsible for fetching sentences containing the target user-inputed keyword, and by comparison with one another, select sentences which demonstrate the appropriate usage of the keyword. 
+
+## Setup and Dependencies
+- run the commands below to install packages
+```
+pip3 install nltk
+pip3 install wordcloud
+```
+- All the sample sentences are from the pruned Arxiv dataset(original dataset is in the reference at the bottom of the page). The filtered Arxiv dataset contains only papers about computer science topics, work is done by Forward Data Lab. Need to download the filtered Arxiv dataset first.
+
+- Need to download the csv file of the computer science keywords
 
 ## Functional Design:
 External Package: MetaPy, NLTK
@@ -40,7 +50,8 @@ def generate_wordcloud(StopWords,wordcloudlist):
 First fetch the texts from the Arxiv dataset (an ideal way is to import the Arxiv dataset into DB and fetch data from DB, so that there is no need for indexing).
 Apply getSentences() to find the sentences which contain the target keyword and with appropriate length. Now we have a list of sentences containing the keyword.
 Then by applying the metaPy package, we got the term frequencies of the sentences and got all the “important” words left. 
-Finally, use the TF-IDF algorithm to compare the sentences and select the best ones.
+
+- Determination of the quality of a sentence: number of other CS keywords appeared in the sentence/length of the sentence
 ![Image of flowchart](https://github.com/Forward-UIUC-2021F/example-sentence-extraction/blob/main/flowchart.png)
 
 ## Reference:
