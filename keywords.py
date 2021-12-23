@@ -1,6 +1,5 @@
 import json
 import nltk
-import pandas as pd
 import csv
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -9,7 +8,6 @@ from wordcloud import WordCloud, STOPWORDS
 from Trie import Trie
 import re
 from utils import construct_trie,construct_re,get_matches,get_matches_overlap
-#print(os.path.abspath("arxiv-metadata-oai-snapshot.json"))
 '''********************
 getSentences function
 PARAMETERS:  KEYWORD -- word to search for; TEXT -- string made of sentence(s)
@@ -18,9 +16,10 @@ RETURN: a list of strings, each is a sentence containing the keyword
 
 def getSentences(keyword, text):
     keywordSentences = []
-    candSentences = text.split('.')
+    candSentences = text.split('. ')
     for sentence in candSentences:
         if keyword.lower() in sentence.lower():
+            sentence = sentence.replace('\n',' ')
             keywordSentences.append(sentence)
     return keywordSentences
  

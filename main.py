@@ -1,7 +1,6 @@
 import json
 import time
 from re import match
-import pandas as pd
 from keywords import getSentences,generate_wordcloud
 import nltk
 import csv
@@ -23,8 +22,6 @@ with open(in_file_path,'r') as in_json_file:
     json_obj_list = json.load(in_json_file)
     count = 0
     for json_obj in json_obj_list:
-        if count > 30000:
-            break
         titleAbstractDict[json_obj["title"]] = json_obj["abstract"]
         count += 1
 end = time.time()
@@ -42,12 +39,12 @@ with open('Keywords-Springer-83K.csv', 'r',encoding='utf-8') as inp:
 
 
 if __name__ == "__main__":
-    trialKeyList = ["dynamic programming","classification","support vector machine","clustering","query execution","cloud computing","sift","virtual machine"]
     trialKey = []
     input_kw = input("Type the keyword:")
     trialKey.append(input_kw)
     candidateSentences = []
     SWords = set(STOPWORDS)
+    start1 = time.time()
     for keyword in trialKey:
         print("KEYWORD : ", keyword)
         for title in titleAbstractDict:
@@ -55,10 +52,10 @@ if __name__ == "__main__":
                 sentenceList = getSentences(keyword, titleAbstractDict[title])
                 for sentence in sentenceList:
                     candidateSentences.append(sentence)
-            if len(candidateSentences)>20:
-                break
-        #print(candidateSentences)
-    #print(len(candidateSentences))
+
+    end1 = time.time()
+    print("time used:", end1-start1)
+    start2 = time.time()
     kw_trie = construct_trie(keywordList)
     reg = construct_re(kw_trie)
     idealSentences = []
@@ -75,12 +72,18 @@ if __name__ == "__main__":
             continue
         idealSentences.append((len(matches)*100.0/sentenceLength,len(matches),sentence))
         
-        #print(matches)
-    idealSentences.sort(key = lambda y : y[0])
-    print(idealSentences)
-    print(len(idealSentences))
-    print(all_matched_kw)
-    #generate_wordcloud(SWords,all_matched_kw)
+    idealSentences.sort(key = lambda y : y[0])          #sort all the candidate sentences in an ascending order
+    end2 = time.time()
+
+    top20sentences = []
+    for i in range(-1,-21,-1):
+        top20sentences.append(idealSentences[i][2])
+    print("time2 used:", end2-start2)
+    print("TOP 20 ideal sentences:",top20sentences)#idealSentences[-20:])
+    print("You got",len(idealSentences),"sentences containing the keyword")
+
+
+    generate_wordcloud(SWords,all_matched_kw)
 
 
 
