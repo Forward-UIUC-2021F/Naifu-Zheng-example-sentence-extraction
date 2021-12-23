@@ -1,37 +1,25 @@
-import os
 import json
 import nltk
-import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+import csv
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-
-
-#print(os.path.abspath("arxiv-metadata-oai-snapshot.json"))
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
+from Trie import Trie
+import re
+from utils import construct_trie,construct_re,get_matches,get_matches_overlap
 '''********************
 getSentences function
 PARAMETERS:  KEYWORD -- word to search for; TEXT -- string made of sentence(s)
 RETURN: a list of strings, each is a sentence containing the keyword
 ************************'''
-# def getSentences(keyword, text):
-#     sentences = []
-#     startIdx = 0
-#     for charIdx in range(len(text)):
-#         if text[charIdx]=='.' and charIdx<len(text)-1:
-#             if keyword.lower() in text[startIdx:charIdx].lower():
-#                 if len(text[startIdx:charIdx]) > 100:
-#                     if startIdx == 0:
-#                         sentences.append(text[startIdx:charIdx+1])
-#                     else:
-#                         sentences.append(text[startIdx+2:charIdx+1])
-#             startIdx = charIdx
-#     return sentences
 
 def getSentences(keyword, text):
     keywordSentences = []
-    candSentences = text.split('.')
+    candSentences = text.split('. ')
     for sentence in candSentences:
         if keyword.lower() in sentence.lower():
+            sentence = sentence.replace('\n',' ')
             keywordSentences.append(sentence)
     return keywordSentences
  
@@ -50,7 +38,25 @@ def eval_sentence(extractedSentences,stop_words):
         scoreSentenceTuple.append((sentence,score))
     return scoreSentenceTuple
 
-stop_words = set(stopwords.words('english'))
-a = [' The first method is based on tabling and\nwe modified the proof theory to table calls and answers on states (practically,\nequivalent to dynamic programming)', 'We experimentally compare the\noutcomes of MR with those of the optimal "full search" dynamic programming\nsolution and of classical merge and split approaches']
-print(eval_sentence(a,stop_words))
+
+def generate_wordcloud(SWords,wordcloudlist):
+    comment_words = ''
+    # for sentence in wordcloudlist:
+    #     tokens = sentence.split()
+    for i in range(len(wordcloudlist)):
+        wordcloudlist[i] = wordcloudlist[i].lower()
+    comment_words += " ".join(wordcloudlist)+" "
+    #print("CCCC:",comment_words)
+    #comment_words = "apple apple banana apple pear pear"
+    wordcloud = WordCloud(width = 800, height = 800,
+                    background_color ='white',
+                    stopwords = SWords,
+                    min_font_size = 10).generate(comment_words)
+
+    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+    plt.show()
+
 
