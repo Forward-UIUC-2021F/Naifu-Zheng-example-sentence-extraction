@@ -8,6 +8,7 @@ import csv
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 # from wordcloud import WordCloud, STOPWORDS
+from wordcloud import STOPWORDS
 import matplotlib.pyplot as plt
 from utils import construct_trie,construct_re,get_matches,get_matches_overlap
 
