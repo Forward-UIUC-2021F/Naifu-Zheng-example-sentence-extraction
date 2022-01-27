@@ -12,13 +12,16 @@ from wordcloud import STOPWORDS
 import matplotlib.pyplot as plt
 from utils import construct_trie,construct_re,get_matches,get_matches_overlap
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 stop_words = set(stopwords.words('english'))
 
-CS_KEYWORDS_FILE = "/Users/ashutoshukey/Downloads/Forward_Data_Lab/Code/data/Keyword_Sets/Keywords-Springer-83K.csv"
+CS_KEYWORDS_FILE = f"{os.getenv('DATA_DIR')}/Keywords-Springer-83K.csv"
 
 # print("********************************START******************************\n*******************************************************************")
-in_file_path = '/Users/ashutoshukey/Downloads/Forward_Data_Lab/Code/data/Papers/filtered_arxiv.json'
+in_file_path = f"{os.getenv('DATA_DIR')}/filtered_arxiv.json"
 titleAbstractDict = {}
 start = time.time()
 with open(in_file_path,'r') as in_json_file:
