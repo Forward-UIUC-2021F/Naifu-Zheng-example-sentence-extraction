@@ -4,7 +4,7 @@ import csv
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS
+# from wordcloud import WordCloud , STOPWORDS
 from Trie import Trie
 import re
 from utils import construct_trie,construct_re,get_matches,get_matches_overlap
