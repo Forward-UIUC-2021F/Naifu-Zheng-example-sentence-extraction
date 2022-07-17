@@ -45,12 +45,7 @@ with open(CS_KEYWORDS_FILE, 'r',encoding='utf-8') as inp:
         keywordList.append(rows[0])
 
 
-def get_ranked_sentences(cmd_line_inp):
-    inps = cmd_line_inp.split()
-    
-    input_kw = inps[0].replace('+', ' ')
-    num_requested = int(inps[1])
-
+def get_ranked_sentences(input_kw, num_requested):
 
     trialKey = []
     # input_kw = input("Type the keyword:")
@@ -94,7 +89,7 @@ def get_ranked_sentences(cmd_line_inp):
         try:
             top20sentences.append(idealSentences[i][2])
         except Exception as e:
-            print(e, file=sys.stderr)
+            # print(e, file=sys.stderr)
             continue
 
     # print("time2 used:", end2-start2)
@@ -106,6 +101,14 @@ def get_ranked_sentences(cmd_line_inp):
     return top20sentences
 
 
+def process_cmdln_inp(cmd_line_inp):
+    inps = cmd_line_inp.split()
+    
+    input_kw = inps[0].replace('+', ' ')
+    num_requested = int(inps[1])
+
+    return input_kw, num_requested
+
 if __name__ == "__main__":
     # https://stackoverflow.com/questions/7091413/how-do-you-read-from-stdin-in-python-from-a-pipe-which-has-no-ending
     # print("Ready")
@@ -114,7 +117,8 @@ if __name__ == "__main__":
         while True:
             buff += sys.stdin.read(1)
             if buff.endswith('\n'):
-                res = get_ranked_sentences(buff[:-1])
+                input_kw, num_requested = process_cmdln_inp(buff[:-1])
+                res = get_ranked_sentences(input_kw, num_requested)
                 res = [{
                     'sentence': s
                 } for s in res]
